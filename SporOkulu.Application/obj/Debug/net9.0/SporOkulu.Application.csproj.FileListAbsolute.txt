@@ -1,0 +1,15 @@
+C:\Users\goktug\Desktop\VsCodeDenemeler\SporOkulu\SporOkulu.Application\bin\Debug\net9.0\SporOkulu.Application.deps.json
+C:\Users\goktug\Desktop\VsCodeDenemeler\SporOkulu\SporOkulu.Application\bin\Debug\net9.0\SporOkulu.Application.dll
+C:\Users\goktug\Desktop\VsCodeDenemeler\SporOkulu\SporOkulu.Application\bin\Debug\net9.0\SporOkulu.Application.pdb
+C:\Users\goktug\Desktop\VsCodeDenemeler\SporOkulu\SporOkulu.Application\bin\Debug\net9.0\SporOkulu.Domain.dll
+C:\Users\goktug\Desktop\VsCodeDenemeler\SporOkulu\SporOkulu.Application\bin\Debug\net9.0\SporOkulu.Domain.pdb
+C:\Users\goktug\Desktop\VsCodeDenemeler\SporOkulu\SporOkulu.Application\obj\Debug\net9.0\SporOkulu.Application.csproj.AssemblyReference.cache
+C:\Users\goktug\Desktop\VsCodeDenemeler\SporOkulu\SporOkulu.Application\obj\Debug\net9.0\SporOkulu.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\goktug\Desktop\VsCodeDenemeler\SporOkulu\SporOkulu.Application\obj\Debug\net9.0\SporOkulu.Application.AssemblyInfoInputs.cache
+C:\Users\goktug\Desktop\VsCodeDenemeler\SporOkulu\SporOkulu.Application\obj\Debug\net9.0\SporOkulu.Application.AssemblyInfo.cs
+C:\Users\goktug\Desktop\VsCodeDenemeler\SporOkulu\SporOkulu.Application\obj\Debug\net9.0\SporOkulu.Application.csproj.CoreCompileInputs.cache
+C:\Users\goktug\Desktop\VsCodeDenemeler\SporOkulu\SporOkulu.Application\obj\Debug\net9.0\SporOkul.7F2010FB.Up2Date
+C:\Users\goktug\Desktop\VsCodeDenemeler\SporOkulu\SporOkulu.Application\obj\Debug\net9.0\SporOkulu.Application.dll
+C:\Users\goktug\Desktop\VsCodeDenemeler\SporOkulu\SporOkulu.Application\obj\Debug\net9.0\refint\SporOkulu.Application.dll
+C:\Users\goktug\Desktop\VsCodeDenemeler\SporOkulu\SporOkulu.Application\obj\Debug\net9.0\SporOkulu.Application.pdb
+C:\Users\goktug\Desktop\VsCodeDenemeler\SporOkulu\SporOkulu.Application\obj\Debug\net9.0\ref\SporOkulu.Application.dll
