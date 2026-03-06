@@ -21,7 +21,9 @@ public class AttendanceManager : IAttendanceService
         _attendanceRepository = attendanceRepository;
     }
 
-    public async Task<ResponseDto<List<AttendanceStudentDto>>> GetStudentsForAttendanceAsync(int branchId)
+  
+
+     public async Task<ResponseDto<List<AttendanceStudentDto>>> GetStudentsForAttendanceAsync(int branchId)
     {
         var students = await _attendanceRepository.GetStudentsByBranchAsync(branchId);
         var dto = _mapper.Map<List<AttendanceStudentDto>>(students);
@@ -40,4 +42,5 @@ public class AttendanceManager : IAttendanceService
 
         await _attendanceRepository.AddRangeAsync(attendanceRecords);
     }
+
 }
