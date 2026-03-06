@@ -1,6 +1,7 @@
 using System;
 using AutoMapper;
 using SporOkulu.Application.DTOs.AttendanceDTOs;
+using SporOkulu.Application.DTOs.ResponseDTOs;
 using SporOkulu.Application.Interfaces;
 using SporOkulu.Domain;
 using SporOkulu.Domain.Interfaces;
@@ -20,10 +21,11 @@ public class AttendanceManager : IAttendanceService
         _attendanceRepository = attendanceRepository;
     }
 
-    public async Task<List<AttendanceStudentDto>> GetStudentsForAttendanceAsync(int branchId)
+    public async Task<ResponseDto<List<AttendanceStudentDto>>> GetStudentsForAttendanceAsync(int branchId)
     {
         var students = await _attendanceRepository.GetStudentsByBranchAsync(branchId);
-        return _mapper.Map<List<AttendanceStudentDto>>(students);
+        var dto = _mapper.Map<List<AttendanceStudentDto>>(students);
+        return ResponseDto<List<AttendanceStudentDto>>.SuccessResult(dto);
     }
 
     public async Task SaveAttendanceAsync(List<CreateAttendanceDto> attendanceDtos, DateTime date)

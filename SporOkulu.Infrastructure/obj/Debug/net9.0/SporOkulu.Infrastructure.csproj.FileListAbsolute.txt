@@ -17,3 +17,4 @@ C:\Users\goktug\Desktop\VsCodeDenemeler\SporOkulu\SporOkulu.Infrastructure\obj\D
 C:\Users\goktug\Desktop\VsCodeDenemeler\SporOkulu\SporOkulu.Infrastructure\obj\Debug\net9.0\SporOkulu.Infrastructure.pdb
 C:\Users\goktug\Desktop\VsCodeDenemeler\SporOkulu\SporOkulu.Infrastructure\obj\Debug\net9.0\SporOkulu.Infrastructure.genruntimeconfig.cache
 C:\Users\goktug\Desktop\VsCodeDenemeler\SporOkulu\SporOkulu.Infrastructure\obj\Debug\net9.0\ref\SporOkulu.Infrastructure.dll
+C:\Users\goktug\Desktop\VsCodeDenemeler\SporOkulu\SporOkulu.Infrastructure\obj\Debug\net9.0\SporOkulu.Infrastructure.sourcelink.json

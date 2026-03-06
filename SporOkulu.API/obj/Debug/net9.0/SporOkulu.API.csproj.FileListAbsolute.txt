@@ -180,3 +180,4 @@ C:\Users\goktug\Desktop\VsCodeDenemeler\SporOkulu\SporOkulu.API\obj\Debug\net9.0
 C:\Users\goktug\Desktop\VsCodeDenemeler\SporOkulu\SporOkulu.API\obj\Debug\net9.0\SporOkulu.API.pdb
 C:\Users\goktug\Desktop\VsCodeDenemeler\SporOkulu\SporOkulu.API\obj\Debug\net9.0\SporOkulu.API.genruntimeconfig.cache
 C:\Users\goktug\Desktop\VsCodeDenemeler\SporOkulu\SporOkulu.API\obj\Debug\net9.0\ref\SporOkulu.API.dll
+C:\Users\goktug\Desktop\VsCodeDenemeler\SporOkulu\SporOkulu.API\obj\Debug\net9.0\SporOkulu.API.sourcelink.json

@@ -13,3 +13,4 @@ C:\Users\goktug\Desktop\VsCodeDenemeler\SporOkulu\SporOkulu.Application\obj\Debu
 C:\Users\goktug\Desktop\VsCodeDenemeler\SporOkulu\SporOkulu.Application\obj\Debug\net9.0\refint\SporOkulu.Application.dll
 C:\Users\goktug\Desktop\VsCodeDenemeler\SporOkulu\SporOkulu.Application\obj\Debug\net9.0\SporOkulu.Application.pdb
 C:\Users\goktug\Desktop\VsCodeDenemeler\SporOkulu\SporOkulu.Application\obj\Debug\net9.0\ref\SporOkulu.Application.dll
+C:\Users\goktug\Desktop\VsCodeDenemeler\SporOkulu\SporOkulu.Application\obj\Debug\net9.0\SporOkulu.Application.sourcelink.json

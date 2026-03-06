@@ -10,3 +10,4 @@ C:\Users\goktug\Desktop\VsCodeDenemeler\SporOkulu\SporOkulu.Domain\obj\Debug\net
 C:\Users\goktug\Desktop\VsCodeDenemeler\SporOkulu\SporOkulu.Domain\obj\Debug\net9.0\refint\SporOkulu.Domain.dll
 C:\Users\goktug\Desktop\VsCodeDenemeler\SporOkulu\SporOkulu.Domain\obj\Debug\net9.0\SporOkulu.Domain.pdb
 C:\Users\goktug\Desktop\VsCodeDenemeler\SporOkulu\SporOkulu.Domain\obj\Debug\net9.0\ref\SporOkulu.Domain.dll
+C:\Users\goktug\Desktop\VsCodeDenemeler\SporOkulu\SporOkulu.Domain\obj\Debug\net9.0\SporOkulu.Domain.sourcelink.json

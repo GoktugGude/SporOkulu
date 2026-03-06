@@ -13,13 +13,31 @@ public class AttendanceRepository : GenericRepository<Attendance>, IAttendanceRe
     {
     }
 
+    // public async Task<List<Student>> GetStudentsByBranchAsync(int branchId)
+    // {
+    //     Console.WriteLine($"BranchID: {branchId}");
+    //     return await _context.Students
+    //         .Include(x => x.AppUser)
+    //         .Where(x => x.BranchId == branchId)
+    //         .ToListAsync();
+    // }
     public async Task<List<Student>> GetStudentsByBranchAsync(int branchId)
-    {
-        return await _context.Students
-            .Include(x => x.AppUser)
-            .Where(x => x.BranchId == branchId)
-            .ToListAsync();
-    }
+{
+    // Sorguyu parçalara ayırarak hatanın nerede olduğunu bulalım
+    var query = _context.Students
+        .Include(x => x.AppUser) // AppUser'ı dahil et
+        .Where(x => x.BranchId == branchId);
+
+    // SQL sorgusunu konsola yazdır (Debug etmek için)
+    Console.WriteLine("Sorgu oluşturuldu.");
+
+    // Listeye çevirirken hata oluşursa burası patlar
+    var list = await query.ToListAsync();
+    
+    Console.WriteLine($"Bulunan öğrenci sayısı: {list.Count}");
+    
+    return list;
+}
 
     public async Task AddRangeAsync(IEnumerable<Attendance> attendances)
 {
