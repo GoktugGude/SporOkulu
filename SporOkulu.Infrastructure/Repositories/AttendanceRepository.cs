@@ -13,35 +13,34 @@ public class AttendanceRepository : GenericRepository<Attendance>, IAttendanceRe
     {
     }
 
-    // public async Task<List<Student>> GetStudentsByBranchAsync(int branchId)
-    // {
-    //     Console.WriteLine($"BranchID: {branchId}");
-    //     return await _context.Students
-    //         .Include(x => x.AppUser)
-    //         .Where(x => x.BranchId == branchId)
-    //         .ToListAsync();
-    // }
     public async Task<List<Student>> GetStudentsByBranchAsync(int branchId)
-{
-    // Sorguyu parçalara ayırarak hatanın nerede olduğunu bulalım
-    var query = _context.Students
-        .Include(x => x.AppUser) // AppUser'ı dahil et
-        .Where(x => x.BranchId == branchId);
+    {
+        return await _context.Set<Student>()
+            .Include(x => x.AppUser)
+            .Where(x => x.BranchId == branchId)
+            .ToListAsync();
+    }
+//     public async Task<List<Student>> GetStudentsByBranchAsync(int branchId)
+// {
+//     // Sorguyu parçalara ayırarak hatanın nerede olduğunu bulalım
+//     var query = _context.Set<Students>
+//         .Include(x => x.AppUser) // AppUser'ı dahil et
+//         .Where(x => x.BranchId == branchId);
 
-    // SQL sorgusunu konsola yazdır (Debug etmek için)
-    Console.WriteLine("Sorgu oluşturuldu.");
+//     // SQL sorgusunu konsola yazdır (Debug etmek için)
+//     Console.WriteLine("Sorgu oluşturuldu.");
 
-    // Listeye çevirirken hata oluşursa burası patlar
-    var list = await query.ToListAsync();
+//     // Listeye çevirirken hata oluşursa burası patlar
+//     var list = await query.ToListAsync();
     
-    Console.WriteLine($"Bulunan öğrenci sayısı: {list.Count}");
+//     Console.WriteLine($"Bulunan öğrenci sayısı: {list.Count}");
     
-    return list;
-}
+//     return list;
+// }
 
     public async Task AddRangeAsync(IEnumerable<Attendance> attendances)
 {
-    await _context.Attendances.AddRangeAsync(attendances);
+    await _context.Set<Attendance>().AddRangeAsync(attendances);
     await _context.SaveChangesAsync();
 }
 }

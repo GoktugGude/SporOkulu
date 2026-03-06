@@ -7,5 +7,5 @@ namespace SporOkulu.Domain.Interfaces;
 public interface IPaymentRepository : IGenericRepository<Payment>
 {
     Task<List<Payment>> GetPaymentsAsync();
-    Task<Payment> GetPaymentAsync(int id);
+    Task<Payment?> GetPaymentAsync(int id);
 }

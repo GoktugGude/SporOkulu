@@ -16,7 +16,7 @@ public class StudentRepository : GenericRepository<Student>, IStudentRepository
 
     public async Task<Student?> GetStudentAsync(int id)
     {
-         return await _context.Students
+         return await _context.Set<Student>()
             .Include(s => s.AppUser)
             .Include(s => s.Parent)
                 .ThenInclude(p => p.AppUser)
@@ -28,7 +28,7 @@ public class StudentRepository : GenericRepository<Student>, IStudentRepository
 
     public async Task<List<Student>> GetStudentsAsync()
     {
-        return await _context.Students
+        return await _context.Set<Student>()
             .Include(s => s.AppUser)
             .Include(s => s.Parent)
                 .ThenInclude(p => p.AppUser)

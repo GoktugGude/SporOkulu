@@ -12,9 +12,9 @@ public class PaymentRepository : GenericRepository<Payment>, IPaymentRepository
     {
     }
 
-    public async Task<Payment> GetPaymentAsync(int id)
+    public async Task<Payment?> GetPaymentAsync(int id)
     {
-        return await _context.Payments
+        return await _context.Set<Payment>()
             .Include(x => x.Student)
             .ThenInclude(x => x.AppUser)
             .FirstOrDefaultAsync(x => x.Id == id);
@@ -22,7 +22,7 @@ public class PaymentRepository : GenericRepository<Payment>, IPaymentRepository
 
     public async Task<List<Payment>> GetPaymentsAsync()
     {
-        return await _context.Payments
+        return await _context.Set<Payment>()
             .Include(p => p.Student)
             .ThenInclude(p => p.AppUser)
             .ToListAsync();

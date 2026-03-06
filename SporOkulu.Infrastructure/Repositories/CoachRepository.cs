@@ -15,14 +15,14 @@ public class CoachRepository : GenericRepository<Coach>, ICoachRepository
 
     public async Task<Coach?> GetCoachAsync(int id)
     {
-       return await _context.Coaches
+       return await _context.Set<Coach>()
             .Include(x => x.AppUser)
             .Include(x => x.Branch).FirstOrDefaultAsync(x => x.Id == id);
     }
 
     public async Task<List<Coach>> GetCoachesAsync()
     {
-        return await _context.Coaches
+        return await _context.Set<Coach>()
             .Include(x => x.AppUser)
             .Include(x => x.Branch)
             .ToListAsync();
