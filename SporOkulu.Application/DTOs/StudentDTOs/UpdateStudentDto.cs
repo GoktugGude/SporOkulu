@@ -1,4 +1,6 @@
-﻿namespace SporOkulu.Application;
+﻿using SporOkulu.Application.DTOs.ParentDTOs;
+
+namespace SporOkulu.Application;
 
 public sealed record UpdateStudentDto(
     int Id,
@@ -10,5 +12,7 @@ public sealed record UpdateStudentDto(
     int ParentId,
     int BranchId, 
     string? BloodType, 
-    string? HealthNotes
+    string? HealthNotes,
+    UpdateParentDto ParentDto
  );
+

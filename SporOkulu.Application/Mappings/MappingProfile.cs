@@ -38,7 +38,10 @@ CreateMap<Student, DetailStudentDto>()
 // Update: DTO -> Entity (Güncellerken)
 CreateMap<UpdateStudentDto, Student>()
     .ForPath(dest => dest.AppUser.FirstName, opt => opt.MapFrom(src => src.FirstName))
-    .ForPath(dest => dest.AppUser.LastName, opt => opt.MapFrom(src => src.LastName));
+    .ForPath(dest => dest.AppUser.LastName, opt => opt.MapFrom(src => src.LastName))
+    .ForPath(dest => dest.AppUser.Email, opt => opt.MapFrom(src => src.Email))
+    .ForPath(dest => dest.AppUser.PhoneNumber, opt => opt.MapFrom(src => src.PhoneNumber))
+    .ForMember(dest => dest.Parent, opt => opt.MapFrom(src => src.ParentDto));
 
 // --- Parent Mapping ---
 CreateMap<CreateParentDto, Parent>()
@@ -50,7 +53,8 @@ CreateMap<CreateParentDto, Parent>()
 CreateMap<Parent, DetailParentDto>()
     .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => $"{src.AppUser.FirstName} {src.AppUser.LastName}"))
     .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.AppUser.Email))
-    .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.AppUser.PhoneNumber));
+    .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.AppUser.PhoneNumber))
+    .ForMember(dest => dest.StudentName, opt => opt.MapFrom(src => src.Students.Select(s => s.AppUser.FirstName + " " + s.AppUser.LastName).ToList()));
 
 // --- Coach Mapping ---
 CreateMap<CreateCoachDto, Coach>()

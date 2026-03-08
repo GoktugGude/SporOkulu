@@ -42,6 +42,7 @@ builder.Services.AddScoped<ICoachRepository, CoachRepository>();
 builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<IAttendanceRepository, AttendanceRepository>();
+builder.Services.AddScoped<IParentRepository, ParentRepository>();
 
 
 //Services
@@ -50,6 +51,7 @@ builder.Services.AddScoped<IStudentService, StudentManager>();
 builder.Services.AddScoped<IPaymentService, PaymentManager>();
 builder.Services.AddScoped<ICoachService, CoachManager>();
 builder.Services.AddScoped<IAttendanceService, AttendanceManager>();
+builder.Services.AddScoped<IParentService, ParentManager>();
 // // Coach için Generic Service kaydı
 // builder.Services.AddScoped<IGenericService<Coach, DetailCoachDto, CreateCoachDto, UpdateCoachDto>, GenericManager<Coach, DetailCoachDto, CreateCoachDto, UpdateCoachDto>>();
 
@@ -59,8 +61,17 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 // 6. Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReact", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173") // Vite'ın varsayılan portu
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
 var app = builder.Build();
+app.UseCors("AllowReact");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

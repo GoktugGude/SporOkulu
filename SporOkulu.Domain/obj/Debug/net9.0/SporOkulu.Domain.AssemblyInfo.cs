@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SporOkulu.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5bf95bcf00538e9acc56d06842a96fff2000d2ac")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e55078be816decec9870ce027ed0dffc0a5bf22e")]
 [assembly: System.Reflection.AssemblyProductAttribute("SporOkulu.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SporOkulu.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

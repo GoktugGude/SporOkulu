@@ -32,8 +32,9 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
         builder.Entity<Student>()
             .HasOne(s => s.AppUser)
-            .WithOne()
+            .WithOne(x => x.Student)
             .HasForeignKey<Student>(s => s.AppUserId)
+            .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
 
         builder.Entity<Student>()

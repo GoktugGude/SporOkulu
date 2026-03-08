@@ -19,6 +19,8 @@ where TUpdateDto :class
 
     protected readonly IGenericRepository<TEntity> _repository;
     protected readonly IMapper _mapper;
+    private IParentRepository parentRepository;
+
     protected virtual string[] Includes => Array.Empty<string>();
 
     public GenericManager(IGenericRepository<TEntity> repository, IMapper mapper)
@@ -26,8 +28,15 @@ where TUpdateDto :class
         _repository = repository;
         _mapper = mapper;
     }
-// GenericManager.cs içindeki GetAllAsync metodunu BU HALE GETİR:
-public virtual async Task<ResponseDto<List<TDto>>> GetAllAsync()
+
+    public GenericManager(IParentRepository parentRepository, IMapper mapper)
+    {
+        this.parentRepository = parentRepository;
+        _mapper = mapper;
+    }
+
+    // GenericManager.cs içindeki GetAllAsync metodunu BU HALE GETİR:
+    public virtual async Task<ResponseDto<List<TDto>>> GetAllAsync()
 {
     // Eski GetAllAsync() yerine, Includes parametresi alan GetAllAsync2'yi çağırıyoruz.
     var entities = await _repository.GetAllAsync2(Includes);
