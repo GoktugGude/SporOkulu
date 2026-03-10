@@ -23,6 +23,7 @@ CreateMap<CreateStudentDto, Student>()
     .ForMember(dest => dest.Parent, opt => opt.MapFrom(src => src.ParentInfo));
 
 
+
 // Read: Entity -> Detail DTO (Listelerken)
 CreateMap<Student, DetailStudentDto>()
      .ForMember(to => to.FirstName, from => from.MapFrom(from => from.AppUser.FirstName))

@@ -12,6 +12,6 @@ public interface IGenericRepository<T> where T : class
     Task<List<T>> GetAllAsync2(params string[] includes);
     Task<T> GetByIdAsync(int id);
    IQueryable<T> GetWhere(Expression<Func<T, bool>> method);
-    Task<int> SaveChangesAsync();
+    // Task<int> SaveChangesAsync();
     Task AddRangeAsync(IEnumerable<T> entities);
 }

@@ -10,27 +10,26 @@ namespace SporOkulu.Application.Services;
 
 public class AttendanceManager : IAttendanceService
 {
-    private readonly IStudentRepository _studentRepository;
-    private readonly IAttendanceRepository _attendanceRepository;
+    private readonly IUnitofWork _uow;
     private readonly IMapper _mapper;
 
-    public AttendanceManager(IMapper mapper, IStudentRepository studentRepository, IAttendanceRepository attendanceRepository)
+
+    public AttendanceManager(IUnitofWork uow, IMapper mapper)
     {
         _mapper = mapper;
-        _studentRepository = studentRepository;
-        _attendanceRepository = attendanceRepository;
+        _uow = uow;
     }
 
-  
 
-     public async Task<ResponseDto<List<AttendanceStudentDto>>> GetStudentsForAttendanceAsync(int branchId)
+
+    public async Task<ResponseDto<List<AttendanceStudentDto>>> GetStudentsForAttendanceAsync(int branchId)
     {
-        var students = await _attendanceRepository.GetStudentsByBranchAsync(branchId);
+        var students = await _uow.Attendance.GetStudentsByBranchAsync(branchId);
         var dto = _mapper.Map<List<AttendanceStudentDto>>(students);
         return ResponseDto<List<AttendanceStudentDto>>.SuccessResult(dto);
     }
 
-    public async Task SaveAttendanceAsync(List<CreateAttendanceDto> attendanceDtos, DateTime date)
+    public async Task<ResponseDto<object>> SaveAttendanceAsync(List<CreateAttendanceDto> attendanceDtos, DateTime date)
     {
         var attendanceRecords = _mapper.Map<List<Attendance>>(attendanceDtos);
         
@@ -40,7 +39,10 @@ public class AttendanceManager : IAttendanceService
             record.Date = date;
         }
 
-        await _attendanceRepository.AddRangeAsync(attendanceRecords);
+        await _uow.Attendance.AddRangeAsync(attendanceRecords);
+        var result = await _uow.SaveChangesAsync();
+        if(result > 0) return ResponseDto<object>.SuccessResult(result,"İşlem başarılı");
+        return ResponseDto<object>.ErrorResult(ErrorCodes.Exception,"Kaydetme sırasında hata oluştu.");
     }
 
 }

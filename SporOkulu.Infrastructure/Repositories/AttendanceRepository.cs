@@ -41,6 +41,6 @@ public class AttendanceRepository : GenericRepository<Attendance>, IAttendanceRe
     public async Task AddRangeAsync(IEnumerable<Attendance> attendances)
 {
     await _context.Set<Attendance>().AddRangeAsync(attendances);
-    await _context.SaveChangesAsync();
+    // await _context.SaveChangesAsync();
 }
 }

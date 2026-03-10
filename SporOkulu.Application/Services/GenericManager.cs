@@ -16,24 +16,20 @@ where TCreateDto : class
 where TUpdateDto :class
 
 {
-
+    protected readonly IUnitofWork _uow;
     protected readonly IGenericRepository<TEntity> _repository;
     protected readonly IMapper _mapper;
-    private IParentRepository parentRepository;
 
     protected virtual string[] Includes => Array.Empty<string>();
 
-    public GenericManager(IGenericRepository<TEntity> repository, IMapper mapper)
+    public GenericManager(IGenericRepository<TEntity> repository, IMapper mapper, IUnitofWork uow)
     {
         _repository = repository;
         _mapper = mapper;
+        _uow = uow;
     }
 
-    public GenericManager(IParentRepository parentRepository, IMapper mapper)
-    {
-        this.parentRepository = parentRepository;
-        _mapper = mapper;
-    }
+   
 
     // GenericManager.cs içindeki GetAllAsync metodunu BU HALE GETİR:
     public virtual async Task<ResponseDto<List<TDto>>> GetAllAsync()
@@ -49,11 +45,12 @@ where TUpdateDto :class
 }
 
 
-    public async Task<ResponseDto<object>> AddAsync(TCreateDto dto)
+    public virtual async Task<ResponseDto<object>> AddAsync(TCreateDto dto)
     {
         var entity = _mapper.Map<TEntity>(dto);
         await _repository.AddAsync(entity);
-        var result = await _repository.SaveChangesAsync();
+
+        var result = await _uow.SaveChangesAsync();
         if(result > 0)
             return ResponseDto<object>.SuccessResult("Kayıt başarıyla eklendi.");
         return ResponseDto<object>.ErrorResult(ErrorCodes.Exception, "Kayıt sırasında bir hata oluştu");
@@ -66,7 +63,7 @@ where TUpdateDto :class
             return ResponseDto<object>.ErrorResult(ErrorCodes.NotFound, "Silinecek bir kayıt bulunamadı.");
 
          _repository.Delete(entity);
-        var result = await _repository.SaveChangesAsync();
+        var result = await _uow.SaveChangesAsync();
 
         if(result > 0)
             return ResponseDto<object>.SuccessResult("Kayıt başarıyla silindi");
@@ -114,7 +111,7 @@ where TUpdateDto :class
         _mapper.Map(dto, entity);
         _repository.Update(entity);
 
-        var result = await _repository.SaveChangesAsync();
+        var result = await _uow.SaveChangesAsync();
         if (result > 0)
             return ResponseDto<object>.SuccessResult("Güncelleme başarılı.");
 

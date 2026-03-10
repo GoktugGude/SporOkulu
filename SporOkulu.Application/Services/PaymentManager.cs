@@ -8,11 +8,8 @@ namespace SporOkulu.Application;
 
 public class PaymentManager : GenericManager<Payment, DetailPaymentDto, CreatePaymentDto, UpdatePaymentDto>, IPaymentService
 {
-    private readonly IPaymentRepository _paymentRepository;
-    public PaymentManager(IMapper mapper, IPaymentRepository paymentRepository) : base(paymentRepository, mapper)
+    public PaymentManager(IUnitofWork uow,IMapper mapper) : base(uow.Payment, mapper,uow)
     {
-        // _studentRepository = studentRepository;
-        _paymentRepository = paymentRepository;
     }
 
     // public async Task<ResponseDto<List<DetailStudentDto>>> GetUnpaidStudentsAsync(int month, int year)
@@ -34,13 +31,13 @@ public class PaymentManager : GenericManager<Payment, DetailPaymentDto, CreatePa
     // protected override string[] Includes => new [] {"Student.AppUser"};
     public override async Task<ResponseDto<List<DetailPaymentDto>>> GetAllAsync()
     {
-        var data = await _paymentRepository.GetPaymentsAsync();
+        var data = await _uow.Payment.GetPaymentsAsync();
         var dto = _mapper.Map<List<DetailPaymentDto>>(data);
         return ResponseDto<List<DetailPaymentDto>>.SuccessResult(dto);
     }
     public override async Task<ResponseDto<DetailPaymentDto>> GetByIdAsync(int id)
     {
-        var data = await _paymentRepository.GetPaymentAsync(id);
+        var data = await _uow.Payment.GetPaymentAsync(id);
         if(data == null) return ResponseDto<DetailPaymentDto>.ErrorResult(ErrorCodes.NotFound,"Ödeme Bulunamadı.");
         var dto = _mapper.Map<DetailPaymentDto>(data);
         return ResponseDto<DetailPaymentDto>.SuccessResult(dto);

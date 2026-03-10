@@ -28,8 +28,11 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(
 
 // 3. IDENTITY KAYDI (Burası Eksikti!)
 builder.Services.AddIdentity<AppUser, AppRole>(options => {
-    options.Password.RequiredLength = 6;
+    options.Password.RequiredLength = 2;
     options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireUppercase = false; // İsterseniz kapatabilirsiniz
+    options.Password.RequireDigit = false;
 })
 .AddEntityFrameworkStores<AppDbContext>()
 .AddDefaultTokenProviders();
@@ -43,6 +46,7 @@ builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<IAttendanceRepository, AttendanceRepository>();
 builder.Services.AddScoped<IParentRepository, ParentRepository>();
+builder.Services.AddScoped<IUnitofWork,UnitofWork>();
 
 
 //Services
@@ -52,6 +56,7 @@ builder.Services.AddScoped<IPaymentService, PaymentManager>();
 builder.Services.AddScoped<ICoachService, CoachManager>();
 builder.Services.AddScoped<IAttendanceService, AttendanceManager>();
 builder.Services.AddScoped<IParentService, ParentManager>();
+builder.Services.AddScoped<IEmailService, EmailManager>();
 // // Coach için Generic Service kaydı
 // builder.Services.AddScoped<IGenericService<Coach, DetailCoachDto, CreateCoachDto, UpdateCoachDto>, GenericManager<Coach, DetailCoachDto, CreateCoachDto, UpdateCoachDto>>();
 
@@ -86,5 +91,21 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<AppRole>>();
+    
+    string[] roleNames = { "Student", "Parent", "Coach" };
+    
+    foreach (var roleName in roleNames)
+    {
+        var roleExist = await roleManager.RoleExistsAsync(roleName);
+        if (!roleExist)
+        {
+            await roleManager.CreateAsync(new AppRole { Name = roleName });
+        }
+    }
+}
 app.Run();
 
