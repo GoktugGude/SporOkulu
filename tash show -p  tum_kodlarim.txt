@@ -1,0 +1,136 @@
+[1mdiff --git a/SporOkulu.API/Program.cs b/SporOkulu.API/Program.cs[m
+[1mindex 58ce6ca..dafbcf8 100644[m
+[1m--- a/SporOkulu.API/Program.cs[m
+[1m+++ b/SporOkulu.API/Program.cs[m
+[36m@@ -28,8 +28,11 @@[m [mbuilder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer([m
+ [m
+ // 3. IDENTITY KAYDI (Burası Eksikti!)[m
+ builder.Services.AddIdentity<AppUser, AppRole>(options => {[m
+[31m-    options.Password.RequiredLength = 6;[m
+[32m+[m[32m    options.Password.RequiredLength = 2;[m
+     options.Password.RequireNonAlphanumeric = false;[m
+[32m+[m[32m    options.Password.RequireLowercase = false;[m
+[32m+[m[32m    options.Password.RequireUppercase = false; // İsterseniz kapatabilirsiniz[m
+[32m+[m[32m    options.Password.RequireDigit = false;[m
+ })[m
+ .AddEntityFrameworkStores<AppDbContext>()[m
+ .AddDefaultTokenProviders();[m
+[36m@@ -43,6 +46,7 @@[m [mbuilder.Services.AddScoped<IPaymentRepository, PaymentRepository>();[m
+ builder.Services.AddScoped<IStudentRepository, StudentRepository>();[m
+ builder.Services.AddScoped<IAttendanceRepository, AttendanceRepository>();[m
+ builder.Services.AddScoped<IParentRepository, ParentRepository>();[m
+[32m+[m[32mbuilder.Services.AddScoped<IUnitofWork,UnitofWork>();[m
+ [m
+ [m
+ //Services[m
+[36m@@ -52,6 +56,7 @@[m [mbuilder.Services.AddScoped<IPaymentService, PaymentManager>();[m
+ builder.Services.AddScoped<ICoachService, CoachManager>();[m
+ builder.Services.AddScoped<IAttendanceService, AttendanceManager>();[m
+ builder.Services.AddScoped<IParentService, ParentManager>();[m
+[32m+[m[32mbuilder.Services.AddScoped<IEmailService, EmailManager>();[m
+ // // Coach için Generic Service kaydı[m
+ // builder.Services.AddScoped<IGenericService<Coach, DetailCoachDto, CreateCoachDto, UpdateCoachDto>, GenericManager<Coach, DetailCoachDto, CreateCoachDto, UpdateCoachDto>>();[m
+ [m
+[36m@@ -86,5 +91,21 @@[m [mapp.UseAuthentication();[m
+ app.UseAuthorization();[m
+ [m
+ app.MapControllers();[m
+[32m+[m
+[32m+[m[32musing (var scope = app.Services.CreateScope())[m
+[32m+[m[32m{[m
+[32m+[m[32m    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<AppRole>>();[m
+[32m+[m[41m    [m
+[32m+[m[32m    string[] roleNames = { "Student", "Parent", "Coach" };[m
+[32m+[m[41m    [m
+[32m+[m[32m    foreach (var roleName in roleNames)[m
+[32m+[m[32m    {[m
+[32m+[m[32m        var roleExist = await roleManager.RoleExistsAsync(roleName);[m
+[32m+[m[32m        if (!roleExist)[m
+[32m+[m[32m        {[m
+[32m+[m[32m            await roleManager.CreateAsync(new AppRole { Name = roleName });[m
+[32m+[m[32m        }[m
+[32m+[m[32m    }[m
+[32m+[m[32m}[m
+ app.Run();[m
+ [m
+[1mdiff --git a/SporOkulu.API/appsettings.json b/SporOkulu.API/appsettings.json[m
+[1mindex 6a6bb13..56d0d19 100644[m
+[1m--- a/SporOkulu.API/appsettings.json[m
+[1m+++ b/SporOkulu.API/appsettings.json[m
+[36m@@ -1,7 +1,15 @@[m
+[32m+[m
+ {[m
+[32m+[m[41m  [m
+    "ConnectionStrings": {[m
+     "Default" : "Data Source=.;Initial Catalog=DBSporOkulu;Integrated Security=True;Encrypt=False;Trust Server Certificate=True"[m
+   },[m
+[32m+[m[32m  "SmtpSettings": {[m
+[32m+[m[32m    "Host": "smtp.gmail.com",[m
+[32m+[m[32m    "Port": "587",[m
+[32m+[m[32m    "User": "goktuggude@gmail.com",[m
+[32m+[m[32m    "Pass": "dloi bvpo pyjs ptjs"[m
+[32m+[m[32m  },[m
+   "Logging": {[m
+     "LogLevel": {[m
+       "Default": "Information",[m
+[1mdiff --git a/SporOkulu.API/bin/Debug/net9.0/SporOkulu.API.dll b/SporOkulu.API/bin/Debug/net9.0/SporOkulu.API.dll[m
+[1mindex aefbc71..3757896 100644[m
+Binary files a/SporOkulu.API/bin/Debug/net9.0/SporOkulu.API.dll and b/SporOkulu.API/bin/Debug/net9.0/SporOkulu.API.dll differ
+[1mdiff --git a/SporOkulu.API/bin/Debug/net9.0/SporOkulu.API.exe b/SporOkulu.API/bin/Debug/net9.0/SporOkulu.API.exe[m
+[1mindex 40c3df5..f56f955 100644[m
+Binary files a/SporOkulu.API/bin/Debug/net9.0/SporOkulu.API.exe and b/SporOkulu.API/bin/Debug/net9.0/SporOkulu.API.exe differ
+[1mdiff --git a/SporOkulu.API/bin/Debug/net9.0/SporOkulu.API.pdb b/SporOkulu.API/bin/Debug/net9.0/SporOkulu.API.pdb[m
+[1mindex 0aaa573..4054f34 100644[m
+Binary files a/SporOkulu.API/bin/Debug/net9.0/SporOkulu.API.pdb and b/SporOkulu.API/bin/Debug/net9.0/SporOkulu.API.pdb differ
+[1mdiff --git a/SporOkulu.API/bin/Debug/net9.0/SporOkulu.Application.dll b/SporOkulu.API/bin/Debug/net9.0/SporOkulu.Application.dll[m
+[1mindex 1347dd4..5ca1e25 100644[m
+Binary files a/SporOkulu.API/bin/Debug/net9.0/SporOkulu.Application.dll and b/SporOkulu.API/bin/Debug/net9.0/SporOkulu.Application.dll differ
+[1mdiff --git a/SporOkulu.API/bin/Debug/net9.0/SporOkulu.Application.pdb b/SporOkulu.API/bin/Debug/net9.0/SporOkulu.Application.pdb[m
+[1mindex 847041d..c0c694e 100644[m
+Binary files a/SporOkulu.API/bin/Debug/net9.0/SporOkulu.Application.pdb and b/SporOkulu.API/bin/Debug/net9.0/SporOkulu.Application.pdb differ
+[1mdiff --git a/SporOkulu.API/bin/Debug/net9.0/SporOkulu.Domain.dll b/SporOkulu.API/bin/Debug/net9.0/SporOkulu.Domain.dll[m
+[1mindex d0c26fc..3940e6c 100644[m
+Binary files a/SporOkulu.API/bin/Debug/net9.0/SporOkulu.Domain.dll and b/SporOkulu.API/bin/Debug/net9.0/SporOkulu.Domain.dll differ
+[1mdiff --git a/SporOkulu.API/bin/Debug/net9.0/SporOkulu.Domain.pdb b/SporOkulu.API/bin/Debug/net9.0/SporOkulu.Domain.pdb[m
+[1mindex 99bf9a3..90bc9a9 100644[m
+Binary files a/SporOkulu.API/bin/Debug/net9.0/SporOkulu.Domain.pdb and b/SporOkulu.API/bin/Debug/net9.0/SporOkulu.Domain.pdb differ
+[1mdiff --git a/SporOkulu.API/bin/Debug/net9.0/SporOkulu.Infrastructure.dll b/SporOkulu.API/bin/Debug/net9.0/SporOkulu.Infrastructure.dll[m
+[1mindex db846a7..168c421 100644[m
+Binary files a/SporOkulu.API/bin/Debug/net9.0/SporOkulu.Infrastructure.dll and b/SporOkulu.API/bin/Debug/net9.0/SporOkulu.Infrastructure.dll differ
+[1mdiff --git a/SporOkulu.API/bin/Debug/net9.0/SporOkulu.Infrastructure.pdb b/SporOkulu.API/bin/Debug/net9.0/SporOkulu.Infrastructure.pdb[m
+[1mindex 5e90696..32514d1 100644[m
+Binary files a/SporOkulu.API/bin/Debug/net9.0/SporOkulu.Infrastructure.pdb and b/SporOkulu.API/bin/Debug/net9.0/SporOkulu.Infrastructure.pdb differ
+[1mdiff --git a/SporOkulu.API/bin/Debug/net9.0/appsettings.json b/SporOkulu.API/bin/Debug/net9.0/appsettings.json[m
+[1mindex 6a6bb13..56d0d19 100644[m
+[1m--- a/SporOkulu.API/bin/Debug/net9.0/appsettings.json[m
+[1m+++ b/SporOkulu.API/bin/Debug/net9.0/appsettings.json[m
+[36m@@ -1,7 +1,15 @@[m
+[32m+[m
+ {[m
+[32m+[m[41m  [m
+    "ConnectionStrings": {[m
+     "Default" : "Data Source=.;Initial Catalog=DBSporOkulu;Integrated Security=True;Encrypt=False;Trust Server Certificate=True"[m
+   },[m
+[32m+[m[32m  "SmtpSettings": {[m
+[32m+[m[32m    "Host": "smtp.gmail.com",[m
+[32m+[m[32m    "Port": "587",[m
+[32m+[m[32m    "User": "goktuggude@gmail.com",[m
+[32m+[m[32m    "Pass": "dloi bvpo pyjs ptjs"[m
+[32m+[m[32m  },[m
+   "Logging": {[m
+     "LogLevel": {[m
+       "Default": "Information",[m
+[1mdiff --git a/SporOkulu.API/obj/Debug/net9.0/SporOkulu.API.AssemblyInfo.cs b/SporOkulu.API/obj/Debug/net9.0/SporOkulu.API.AssemblyInfo.cs[m
+[1mindex dd27613..79b6a91 100644[m
+[1m--- a/SporOkulu.API/obj/Debug/net9.0/SporOkulu.API.AssemblyInfo.cs[m
+[1m+++ b/SporOkulu.API/obj/Debug/net9.0/SporOkulu.API.AssemblyInfo.cs[m
+[36m@@ -13,7 +13,7 @@[m [musing System.Reflection;[m
+ [assembly: System.Reflection.AssemblyCompanyAttribute("SporOkulu.API")][m
+ [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")][m
+ [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")][m
+[31m-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e55078be816decec9870ce027ed0dffc0a5bf22e")][m
+[32m+[m[32m[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1ad61d799b2f44559535021debfe4bf262664b0c")][m
+ [assembly: System.Reflection.AssemblyProductAttribute("SporOkulu.API")][m
+ [assembly: System.Reflection.AssemblyTitleAttribute("SporOkulu.API")][m
+ [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")][m
+[1mdiff --git a/SporOkulu.
