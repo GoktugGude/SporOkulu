@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SporOkulu.Application")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1ad61d799b2f44559535021debfe4bf262664b0c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1aa3e7ec36d7ca3add00245c0fbcea02c912f105")]
 [assembly: System.Reflection.AssemblyProductAttribute("SporOkulu.Application")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SporOkulu.Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
